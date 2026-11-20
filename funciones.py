@@ -58,9 +58,9 @@ def parsear_csv(datos: str) -> list[dict]:
         list[dict]: lista de videojuegos con los tipos ya convertidos (int / float).
     """
     lista = []
-    datos_limpios = datos.strip()                 # saco el último \n
-    lista_lineas = datos_limpios.split("\n")      # una línea por juego
-    encabezado = lista_lineas.pop(0)              # saco el encabezado
+    datos_limpios = datos.strip()                 
+    lista_lineas = datos_limpios.split("\n")      
+    encabezado = lista_lineas.pop(0)              
     claves = encabezado.split(",")
 
     for i in range(len(lista_lineas)):
@@ -140,7 +140,7 @@ def juego_a_linea_csv(juego: dict, claves: list) -> str:
     """
     valores = []
     for i in range(len(claves)):
-        valores.append(str(juego[claves[i]]))   # join solo une strings
+        valores.append(str(juego[claves[i]]))   
     return ",".join(valores) + "\n"
 
 
@@ -473,7 +473,7 @@ def registrar_venta(lista_juegos: list[dict], ruta: str, claves: list) -> bool:
             juego = juegos_con_stock[indice]
             cantidad = pedir_entero_en_rango(f"Unidades a vender (1 a {juego['stock']}): ",
                                              1, juego["stock"])
-            juego["stock"] -= cantidad              # modifica el dict ORIGINAL (referencia)
+            juego["stock"] -= cantidad              
             juego["unidades_vendidas"] += cantidad
             if guardar_juegos(lista_juegos, ruta, claves) == True:
                 exito = True
@@ -524,9 +524,9 @@ def calcular_unidades_por_genero(lista_juegos: list[dict], generos: list) -> dic
     """
     unidades = {}
     for genero in generos:
-        unidades.update({genero: 0})          # inicializo los acumuladores en 0
+        unidades.update({genero: 0})          
     for juego in lista_juegos:
-        if juego["genero"] in unidades:       # por si el CSV trae un género desconocido
+        if juego["genero"] in unidades:      
             unidades[juego["genero"]] += juego["unidades_vendidas"]
     return unidades
 
@@ -611,7 +611,7 @@ def calcular_promedio_precios_por_genero(lista_juegos: list[dict], generos: list
         contadores.update({genero: 0})
 
     for juego in lista_juegos:
-        if juego["genero"] in acumuladores:   # por si el CSV trae un género desconocido
+        if juego["genero"] in acumuladores:   
             acumuladores[juego["genero"]] += juego["precio"]
             contadores[juego["genero"]] += 1
 
@@ -823,12 +823,3 @@ def pausar() -> None:
 
 
 def limpiar_teclado_os()->None:
-    """
-    Objetivo: Función con el {import os} que al convocarlo sirve para limpiar el teclado según el OS del usuario sin necesidad de repetir código.
-    """
-    import os 
-
-    if os.name == "nt":
-        os.system("cls")
-    else:
-        os.system("clear")
